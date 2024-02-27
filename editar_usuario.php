@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Usuario</title>
-    <!-- Agrega aquí tus estilos CSS -->
+    
 </head>
 <body>
     <h1>Editar Usuario</h1>
