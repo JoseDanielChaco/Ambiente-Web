@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($tipo_usuario == 'super') {
             header("Location: administrar_usuarios.php");
         } else {
-            header("Location: principal.html");
+            header("Location: index.html");
         }
     } else {
         echo "Usuario o contraseña incorrectos.";
