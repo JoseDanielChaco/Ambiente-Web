@@ -1,9 +1,7 @@
 <?php
-
-
     $host = "localhost";
     $user = "root";
-    $clave = "";
+    $clave = "NoE.021!";
     $bd = "proyecto";
     $conexion = mysqli_connect($host,$user,$clave,$bd);
     if (mysqli_connect_errno()){
