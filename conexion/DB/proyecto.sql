@@ -56,12 +56,15 @@ ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
+<<<<<<< HEAD
 AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 
+=======
+>>>>>>> ddd554144fe2a3c3e727dd31e71bba5bef410613
 CREATE TABLE `categorias` (
   `id` int(11) NOT NULL,
   `categoria` varchar(50) NOT NULL);
@@ -84,6 +87,7 @@ CREATE TABLE `productos` (
   `imagen` varchar(50) NOT NULL,
   `id_categoria` int(11) NOT NULL
 );
+<<<<<<< HEAD
 
 INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio_normal`, `financiado`, `cantidad`, `imagen`, `id_categoria`) VALUES
 (1, 'Toyota', 'Camry', 45000.00, 480.00, 2, 'img/carro1.png', 1),
@@ -105,6 +109,18 @@ ALTER TABLE `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+=======
+
+INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio_normal`, `financiado`, `cantidad`, `imagen`, `id_categoria`) VALUES
+(1, 'Toyota', 'Camry', 45000.00, 480.00, 2, 'img/carro1.png', 1),
+(2, 'Toyota', '4Runner', 80000.00, 700.00, 3, 'img/carro2.png', 1),
+(3, 'Toyota', 'Rav4 Hibrido', 48000.00, 550.00, 1, 'img/carro3.png', 1),
+(4, 'Toyota', 'Agya', 25000.00, 299.00, 3, 'img/carro4.png', 1),
+(5, 'Ford', 'Explorer LTX', 41000.00, 410.00, 2, 'img/carro5.png', 2),
+(6, 'Ford', 'Expedition', 55000.00, 500.00, 1, 'img/carro6.png', 2),
+(7, 'Ford', 'Mustang Ecoboost', 63000.00, 590.00, 8, 'img/carro7.png', 3),
+(8, 'Hyundai', 'Santa FE', 35300.00, 420.00, 1, 'img/carro8.png', 4);
+>>>>>>> ddd554144fe2a3c3e727dd31e71bba5bef410613
 
 
 CREATE TABLE contactos (
