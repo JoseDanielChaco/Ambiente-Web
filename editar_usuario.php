@@ -44,17 +44,25 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Usuario</title>
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Editar Usuario</h1>
-    <form action="editar_usuario.php?id=<?php echo $user_id; ?>" method="post">
+<h1>Editar Usuario</h1>
+<form action="editar_usuario.php?id=<?php echo $user_id; ?>" method="post">
+    <div class="form-group">
         <label for="nombre">Nombre de Usuario:</label>
         <input type="text" id="nombre" name="nombre" value="<?php echo $user['nombre_usuario']; ?>" required>
+    </div>
+    <div class="form-group">
         <label for="email">Correo Electrónico:</label>
         <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required>
+    </div>
+    <div class="form-group">
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" value="<?php echo $user['contrasena']; ?>" required>
-        <button type="submit">Guardar Cambios</button>
-    </form>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+
 </body>
 </html>

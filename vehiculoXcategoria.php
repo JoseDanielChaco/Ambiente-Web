@@ -68,78 +68,72 @@
             </div>
         </div>
         </nav>
-        
+
 <?php
-// Iniciar sesión si aún no está iniciada
-session_start();
+// conexion a la base de datos
+require_once "conexion/conexion.php";
 
-// Verificar si hay elementos en el carrito
-if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
-    // Obtener los vehículos del carrito desde la sesión
-    $carrito = $_SESSION['carrito'];
-
-    // Conectar a la base de datos o incluir el archivo de conexión
-    require_once "conexion/conexion.php";
+ 
+    if (isset($_GET['categoria'])) {
+        $categoriaId = $_GET['categoria'];
+        
+        // Consultar la base de datos para obtener los vehículos de la categoría especificada y devolver resultados igual que en home.php
+        $query = mysqli_query($conexion, "SELECT p.*, c.id AS id_cat, c.categoria FROM productos p INNER JOIN categorias c ON c.id = p.id_categoria WHERE p.id_categoria = $categoriaId");
+        $result = mysqli_num_rows($query);
+        
+        if ($result > 0) {
+            while ($data = mysqli_fetch_assoc($query)) {
 ?>
-<div style="display: flex; justify-content: center; height: 100vh;">
-    <div>
-        <h2 style="text-align: center;">Carrito de compras</h2>
-        <ul>
-            <?php
-            foreach ($carrito as $vehiculoId) {
-                // Obtener información del vehículo desde la base de datos
-                $query = mysqli_query($conexion, "SELECT nombre, precio_normal, imagen FROM productos WHERE id = $vehiculoId");
-                $vehiculo = mysqli_fetch_assoc($query);
-
-                // Mostrar información del vehículo
-                echo "<li>";
-                echo "<img src='assets/img/{$vehiculo['imagen']}' alt='{$vehiculo['nombre']}' style='max-width: 200px; max-height: 200px;' />";
-                echo "{$vehiculo['nombre']} - Precio: {$vehiculo['precio_normal']}";
-                echo "</li>";
-            }
-            ?>
-            </ul>
-        <div class="button-container">
-            <form method="post" style="display: inline;">
-                <button type="submit" name="vaciar" class="btn btn-secondary my-button">Vaciar carrito</button>
-            </form>
-            <form action="pago.php" method="get" style="display: inline;">
-                <button type="submit" class="btn btn-secondary my-button">Continuar con la compra</button>
-            </form>
+                <div class="col mb-5 productos" category="<?php echo $data['categoria']; ?>">
+    <div class="card h-100">
+        <!-- Venta-->
+        <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><?php echo ($data['precio_normal'] > $data['Financiado']) ? '' : ''; ?></div>
+        <!-- Contenedor de la imagen centrado -->
+        <div class="text-center">
+            <!-- Imagen -->
+            <img class="card-img-top img-fluid" src="assets/img/<?php echo $data['imagen']; ?>" alt="Imagen de <?php echo $data['nombre']; ?>" style="max-width: 15%; height: auto;" />
+        </div>
+        <!-- Detalles-->
+        <div class="card-body p-1">
+            <div class="text-center">
+                <!-- Nombre Producto-->
+                <h5 class="fw-bolder"><?php echo $data['nombre'] ?></h5>
+                <p><?php echo $data['descripcion']; ?></p>
+                <!-- Precio Producto-->
+                <p>$<?php echo $data['precio_normal']; ?></p>
+                <!-- Financiamiento-->
+                <p>Financiamiento: $<?php echo $data['Financiado']; ?></p>
+                <!-- Reviews-->
+                <div class="d-flex justify-content-center small text-warning mb-2">
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+
+                <!-- Acciones-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto agregar" data-id="<?php echo $data['id']; ?>" href="#">Agregar</a></div>
+                                </div>
+                      
+    
 <?php
-    // Verificar si se ha enviado la solicitud para vaciar el carrito
-    if (isset($_POST['vaciar'])) {
-        // Vaciar el carrito eliminando todos los vehículos
-        unset($_SESSION['carrito']);
-        // Redireccionar a la misma página para actualizar la vista del carrito
-        header("Location: carrito.php");
-        exit;
+            }
+        } else {
+            // cuando no hay nada para mostrar
+            echo "<p>No se encontraron vehículos para esta categoría.</p>";
+        }
+    } else {
+      //cuando no se paga un id de categoria
+        echo "<p>Por favor, seleccione una categoría.</p>";
     }
-} else {
-    // Mostrar un mensaje si el carrito está vacío
-    echo "<h2>Carrito de compras</h2>";
-    echo "<p>El carrito está vacío.</p>";
-}
 ?>
-  
-</style>
-<footer class="footer fixed-bottom">   
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <a href="faqs.php" class="text-white">¿Cómo puedo comprar un carro?</a>
-                <a href="faqs.html" class="text-white">¿Cuáles son los requisitos para financiamiento?</a>
-            </div>
-            <div class="col-md-6">
-                <h2 class="text-white">Contáctenos</h2>
-                <a href="contactenos.php" class="text-white">Envíenos un mensaje</a>
-                <a href="tel:+123456789" class="text-white">Llámenos al +(506)123456789</a>
-                <p class="m-0 text-center text-white">Copyright &copy; ComproCarroCR</p>
-            </div>
-        </div>
-    </div>
-</footer>
+<?php
+include "template/footer.php";
+?> 

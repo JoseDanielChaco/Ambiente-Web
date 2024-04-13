@@ -1,8 +1,9 @@
-<<<<<<< HEAD
 <?php
 session_start();
 require_once('db.php');
-    
+
+$message = ""; // Variable para almacenar el mensaje de éxito o error
+
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener datos del formulario
@@ -16,52 +17,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_categoria = $_POST['id_categoria']; 
 
     // Consulta SQL para insertar el automóvil
- 
-                   $sql_insert = "INSERT INTO productos (id, nombre, descripcion, precio_normal, financiado, cantidad, imagen, id_categoria) 
+    $sql_insert = "INSERT INTO productos (id, nombre, descripcion, precio_normal, financiado, cantidad, imagen, id_categoria) 
                    VALUES ('$id','$nombre', '$descripcion', $precio_normal, '$Financiado', '$cantidad', '$imagen', '$id_categoria')";
-    
 
     // Ejecutar la consulta
     if ($conn->query($sql_insert) === TRUE) {
-        echo "Automóvil agregado correctamente.";
-        echo '<a href="home.php"><button>Ir a la pagina principal</button></a>';
-    echo '<a href="administrar_usuarios.php"><button>Regresar a la pagina anterior</button></a>';
-
-
+        $message = "Automóvil agregado correctamente.";
     } else {
-        echo "Error al agregar el automóvil: " . $conn->error;
-        echo '<a href="home.php"><button>Ir a la pagina principal</button></a>';
-        echo '<a href="administrar_usuarios.php"><button>Regresar a la pagina anterior</button></a>';
-    
+        $message = "Error al agregar el automóvil: " . $conn->error;
     }
 }
 ?>
-=======
-<?php
-session_start();
-require_once('db.php');
-    
-// Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener datos del formulario
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
-    $precio_normal = $_POST['precio_normal'];
-    $financiado = $_POST['financiado'];
-    $cantidad = $_POST['cantidad'];
-    $imagen = $_POST['imagen'];
-    $id_categoria = $_POST['id_categoria']; 
 
-    // Consulta SQL para insertar el automóvil
-    $sql_insert = "INSERT INTO productos (nombre, descripcion, precio_normal, financiado, cantidad, imagen, id_categoria) 
-                   VALUES ('$nombre', $descripcion, $precio_normal, '$financiado', '$cantidad', '$imagen', '$id_categorias)";
-
-    // Ejecutar la consulta
-    if ($conn->query($sql_insert) === TRUE) {
-        echo "Automóvil agregado correctamente.";
-    } else {
-        echo "Error al agregar el automóvil: " . $conn->error;
-    }
-}
-?>
->>>>>>> ddd554144fe2a3c3e727dd31e71bba5bef410613
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Automóvil</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><?php echo $message; ?></h1>
+        <a href="home.php" class="btn">Ir a la página principal</a>
+        <a href="administrar_usuarios.php" class="btn">Regresar a la página anterior</a>
+    </div>
+</body>
+</html>
