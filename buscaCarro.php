@@ -1,6 +1,9 @@
 <?php require_once "conexion/conexion.php"; ?>
 <?php include "template/header.php"; ?>
 
+<!-- Botón flotante -->
+<a href="carrito.php" class="btn-flotante" id="btnCarrito">Carrito <span class="badge bg-success" id="carrito">0</span></a>
+
 <script>
     //Este script de abajo ayuda a pasar el id a autoXcategoria para poder filtrarlos
     function selectCategory(categoryId) {
