@@ -14,6 +14,10 @@
     <link href="https://unpkg.com/@css.gg/json" rel="stylesheet">
 </head>
 <body>
+    <!-- Icono de inicio de sesión -->
+    <link href="https://unpkg.com/@css.gg/json" rel="stylesheet">
+</head>
+<body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <a href="carrito.php" class="btn-flotante" id="btnCarrito">Carrito <span class="badge bg-success" id="carrito">0</span></a>
@@ -40,7 +44,6 @@
                     <li><a class="dropdown-item" href="#" onclick="selectCategory(2)">Promociones</a></li>
                     <li><a class="dropdown-item" href="#" onclick="selectCategory(3)">Por Ingresar</a></li>
                      <li><a class="dropdown-item" href="#" onclick="selectCategory(4)">Entrega Inmediata</a></li>
-                     
                          </ul>
                     </li>
                 </a>
@@ -53,10 +56,6 @@
 
                 <li class="nav-item">
                 <a class="nav-link active" aria-disabled="true" href="contactenos.php">Contáctenos</a>
-                </li>
-
-                <li class="nav-item">
-                <a class="nav-link active" aria-disabled="true" href="favoritos.php">Favoritos</a>
                 </li>
             </ul>
                
@@ -73,52 +72,79 @@
             </div>
         </div>
         </nav>
+        
+<?php
 
+// Iniciar sesión si aún no está iniciada
+session_start();
 
-<section class="py-5">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+// Verificar si hay elementos en el carrito
+if (isset($_SESSION['favoritos']) && !empty($_SESSION['favoritos'])) {
+    // Obtener los vehículos del carrito desde la sesión
+    $favoritos = $_SESSION['favoritos'];
+
+    // Conectar a la base de datos o incluir el archivo de conexión
+    require_once "conexion/conexion.php";
+?>
+<div style="display: flex; justify-content: center; height: 100vh;">
+    <div>
+        <h2 style="text-align: center;">Favoritos</h2>
+        <ul>
             <?php
-            $query = mysqli_query($conexion, "SELECT p.*, c.id AS id_cat, c.categoria FROM productos p INNER JOIN categorias c ON c.id = p.id_categoria");
-            $result = mysqli_num_rows($query);
-            if ($result > 0) {
-                while ($data = mysqli_fetch_assoc($query)) { ?>
-                    <div class="col productos" category="<?php echo $data['categoria']; ?>">
-                        <div class="card h-100">
-                            <!-- Venta-->
-                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><?php echo ($data['precio_normal'] > $data['Financiado']) ? '' : ''; ?></div>
-                            <!-- Imagen-->
-                            <img class="card-img-top img-fluid" src="assets/img/<?php echo $data['imagen']; ?>" alt="Imagen de <?php echo $data['nombre']; ?>" />
-                            <!-- Detalles-->
-                            <div class="card-body">
-                                <h5 class="fw-bolder"><?php echo $data['nombre'] ?></h5>
-                                <p><?php echo $data['descripcion']; ?></p>
-                                <!-- Precio Producto-->
-                                <p>$<?php echo $data['precio_normal']; ?></p>
-                                <!-- Financiamiento-->
-                                <p>Financiamiento: $<?php echo $data['Financiado']; ?></p>
-                                <!-- Reviews-->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                </div>
-                            </div>
-                            <!-- Acciones-->
-                            <div class="card-footer bg-transparent border-top-0">
-                                <div class="text-center">
-                                    <a class="btn btn-outline-dark mt-auto agregar" data-id="<?php echo $data['id']; ?>" href="#">Agregar</a>
-                                    <a class="btn btn-outline-dark mt-auto favoritos" id="favorito"data-id="<?php echo $data['id']; ?>" href="#">Favoritos</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            <?php  }
-            } ?>
+            foreach ($favoritos as $vehiculoId) {
+                // Obtener información del vehículo desde la base de datos
+                $query = mysqli_query($conexion, "SELECT nombre, precio_normal, imagen FROM productos WHERE id = $vehiculoId");
+                $vehiculo = mysqli_fetch_assoc($query);
+
+                // Mostrar información del vehículo
+                echo "<li>";
+                echo "<img src='assets/img/{$vehiculo['imagen']}' alt='{$vehiculo['nombre']}' style='max-width: 200px; max-height: 200px;' />";
+                echo "{$vehiculo['nombre']} - Precio: {$vehiculo['precio_normal']}";
+                echo "</li>";
+            }
+            ?>
+            </ul>
+        <div class="button-container">
+            <form method="post" style="display: inline;">
+                <button type="submit" name="vaciar" class="btn btn-secondary my-button">Vaciar favoritos</button>
+            </form>
+            <form action="pago.php" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-secondary my-button">Continuar con la compra</button>
+            </form>
         </div>
     </div>
-</section>
+</div>
 
-<?php include "template/footer.php"; ?>
+<?php
+    // Verificar si se ha enviado la solicitud para vaciar el carrito
+    if (isset($_POST['vaciar'])) {
+        // Vaciar el carrito eliminando todos los vehículos
+        unset($_SESSION['favoritos']);
+        // Redireccionar a la misma página para actualizar la vista del carrito
+        header("Location: favoritos.php");
+        exit;
+    }
+} else {
+    // Mostrar un mensaje si el carrito está vacío
+    echo "<h2>Favoritos</h2>";
+    echo "<p>No hay favoritos.</p>";
+}
+?>
+  
+</style>
+<footer class="footer fixed-bottom">   
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="faqs.php" class="text-white">¿Cómo puedo comprar un carro?</a>
+                <a href="faqs.html" class="text-white">¿Cuáles son los requisitos para financiamiento?</a>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-white">Contáctenos</h2>
+                <a href="contactenos.php" class="text-white">Envíenos un mensaje</a>
+                <a href="tel:+123456789" class="text-white">Llámenos al +(506)123456789</a>
+                <p class="m-0 text-center text-white">Copyright &copy; ComproCarroCR</p>
+            </div>
+        </div>
+    </div>
+</footer>
