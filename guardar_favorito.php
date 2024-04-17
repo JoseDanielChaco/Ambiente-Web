@@ -1,7 +1,5 @@
-
 <?php
-
-//Favoritos
+// Favoritos
 // Verificar si se recibió una solicitud AJAX
 if (isset($_POST['action']) && $_POST['action'] === 'favoritos' && isset($_POST['data'])) {
     // Iniciar o reanudar la sesión
@@ -9,9 +7,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'favoritos' && isset($_POST[
     
     // Obtener el ID del vehículo a agregar al carrito
     $vehicleId = $_POST['data'][0];
-
-    // Aquí puedes realizar cualquier lógica adicional, como verificar si el vehículo existe en la base de datos, etc.
-    // Por ahora, simplemente lo agregaremos al carrito de la sesión
 
     // Verificar si el carrito ya existe en la sesión
     if (!isset($_SESSION['favoritos'])) {
@@ -25,7 +20,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'favoritos' && isset($_POST[
     // Enviar una respuesta JSON indicando que se agregó el vehículo al carrito
     $response = array(
         'success' => true,
-        'total' => count($_SESSION['favoritos']) // Puedes enviar el número total de elementos en el carrito
+        'total' => count($_SESSION['favoritos']) // Se puede enviar el número total de elementos en el carrito
     );
     echo json_encode($response);
 } else {
