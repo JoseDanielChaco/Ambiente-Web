@@ -14,6 +14,10 @@
     <link href="https://unpkg.com/@css.gg/json" rel="stylesheet">
 </head>
 <body>
+    <!-- Icono de inicio de sesión -->
+    <link href="https://unpkg.com/@css.gg/json" rel="stylesheet">
+</head>
+<body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <a href="carrito.php" class="btn-flotante" id="btnCarrito">Carrito <span class="badge bg-success" id="carrito">0</span></a>
@@ -101,7 +105,7 @@ while($row = $result->fetch_assoc()) {
             <!-- Contenedor de la imagen centrado -->
             <div class="text-center">
                 <!-- Imagen -->
-                <img class="card-img-top img-fluid" src="assets/img/<?php echo $row['imagen']; ?>" alt="Imagen de <?php echo $row['nombre']; ?>" style="max-width: 15%; height: auto;" />
+                <img class="card-img-top img-fluid" src="assets/img/<?php echo $row['imagen']; ?>" alt="Imagen de <?php echo $row['nombre']; ?>" style="max-width: 35%; height: auto;" />
             </div>
             <!-- Detalles-->
             <div class="card-body p-1">
@@ -133,7 +137,21 @@ while($row = $result->fetch_assoc()) {
     <?php
 }
 } else {
-echo "No se encontraron resultados";
+echo "Oops";
+?>
+        <!-- Imagen de error -->
+        <div class="col mb-5 productos d-flex align-items-center justify-content-center">
+        <div class="card h-100">
+        <br> </br>
+        <img class="card-img-top img-fluid" src="https://i.kym-cdn.com/entries/icons/facebook/000/021/464/14608107_1180665285312703_1558693314_n.jpg" alt="No se encontraron resultados" style="max-width: 100%; height: auto; object-fit: contain;" />
+        <div class="card-body p-1">
+            <div class="text-center">
+                    <p>No encontramos ningun elemento que coincida con tu busqueda </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
 }
 
 

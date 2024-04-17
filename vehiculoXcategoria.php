@@ -91,7 +91,7 @@ require_once "conexion/conexion.php";
         <!-- Contenedor de la imagen centrado -->
         <div class="text-center">
             <!-- Imagen -->
-            <img class="card-img-top img-fluid" src="assets/img/<?php echo $data['imagen']; ?>" alt="Imagen de <?php echo $data['nombre']; ?>" style="max-width: 15%; height: auto;" />
+            <img class="card-img-top img-fluid" src="assets/img/<?php echo $data['imagen']; ?>" alt="Imagen de <?php echo $data['nombre']; ?>" style="max-width: 35%; height: auto;" />
         </div>
         <!-- Detalles-->
         <div class="card-body p-1">

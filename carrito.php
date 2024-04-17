@@ -14,6 +14,10 @@
     <link href="https://unpkg.com/@css.gg/json" rel="stylesheet">
 </head>
 <body>
+    <!-- Icono de inicio de sesión -->
+    <link href="https://unpkg.com/@css.gg/json" rel="stylesheet">
+</head>
+<body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <a href="carrito.php" class="btn-flotante" id="btnCarrito">Carrito <span class="badge bg-success" id="carrito">0</span></a>
